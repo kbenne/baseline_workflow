@@ -1,0 +1,10 @@
+{
+	"weather_file": "USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
+	"seed_file": "seed.osm",
+	"steps": [
+		{
+			"measure_dir_name": "RunBaseline",
+			"arguments": {}
+		},
+	]
+}
