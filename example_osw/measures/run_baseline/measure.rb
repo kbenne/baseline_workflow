@@ -24,6 +24,21 @@ class RunBaseline < OpenStudio::Measure::ModelMeasure
       return false
     end
 
+    workflow = runner.workflow
+
+    # Directory for baseline run
+    baseline_run_dir = File.join(workflow.absoluteRunDir.to_s, 'baseline')
+    FileUtils.mkdir_p(baseline_run_dir)
+
+    # Create baseline osm model
+    baseline_osm_name = File.join(baseline_run_dir, 'baseline.osm')
+    model.clone.save(baseline_osm_name, true)
+
+    # Copy weather file
+    weather_file = workflow.findFile(workflow.weatherFile.get).get.to_s
+
+    FileUtils.cp(weather_file, baseline_run_dir)
+
     return true
   end
 
