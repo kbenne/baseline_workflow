@@ -28,3 +28,5 @@ class RunBaseline < OpenStudio::Measure::ModelMeasure
   end
 
 end
+
+RunBaseline.new.registerWithApplication

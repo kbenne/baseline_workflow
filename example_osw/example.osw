@@ -3,8 +3,8 @@
 	"seed_file": "seed.osm",
 	"steps": [
 		{
-			"measure_dir_name": "RunBaseline",
+			"measure_dir_name": "run_baseline",
 			"arguments": {}
-		},
+		}
 	]
 }
