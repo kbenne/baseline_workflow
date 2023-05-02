@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>report_savings</name>
+  <uid>f6cafc0c-429f-4fc5-b0dd-92310d9f3fb2</uid>
+  <version_id>8894ab67-288a-4ddd-9096-6030bf0d67ec</version_id>
+  <version_modified>20230502T155147Z</version_modified>
+  <xml_checksum>66989E4A</xml_checksum>
+  <class_name>ReportSavings</class_name>
+  <display_name>Report Savings</display_name>
+  <description>Calculate savings compared to a previously run baseline simulation</description>
+  <modeler_description>Calculate savings compared to a previously run baseline simulation</modeler_description>
+  <arguments />
+  <outputs />
+  <provenances />
+  <tags />
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ReportingMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type></usage_type>
+      <checksum>A988DF55</checksum>
+    </file>
+  </files>
+</measure>

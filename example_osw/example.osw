@@ -3,7 +3,7 @@
 	"seed_file": "seed.osm",
 	"steps": [
 		{
-			"measure_dir_name": "run_baseline",
+			"measure_dir_name": "report_savings",
 			"arguments": {}
 		}
 	]

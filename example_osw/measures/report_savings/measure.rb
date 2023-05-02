@@ -1,26 +1,26 @@
-class RunBaseline < OpenStudio::Measure::ModelMeasure
+class ReportSavings < OpenStudio::Measure::ReportingMeasure
 
   def name
-    return 'Run Baseline'
+    return 'Report Savings'
   end
 
   def description
-    return 'Create a corresponding baseline model and run simulation'
+    return 'Calculate savings compared to a previously run baseline simulation'
   end
 
   def modeler_description
     return self.description()
   end
 
-  def arguments(model)
+  def arguments()
     args = OpenStudio::Measure::OSArgumentVector.new
     return args
   end
 
-  def run(model, runner, user_arguments)
-    super(model, runner, user_arguments)
+  def run(runner, user_arguments)
+    super(runner, user_arguments)
 
-    if !runner.validateUserArguments(arguments(model), user_arguments)
+    if !runner.validateUserArguments(arguments(), user_arguments)
       return false
     end
 
@@ -32,7 +32,9 @@ class RunBaseline < OpenStudio::Measure::ModelMeasure
 
     # Create baseline osm model
     baseline_osm_path = baseline_run_dir / OpenStudio::Path.new('baseline.osm')
-    model.clone.save(baseline_osm_path, true)
+    # This will need to be updated with 179d baseline generator code
+    baseline_osm = runner.lastOpenStudioModel.get.clone
+    baseline_osm.save(baseline_osm_path, true)
 
     # Copy weather file
     weather_file_path = workflow.findFile(workflow.weatherFile.get).get
@@ -50,9 +52,23 @@ class RunBaseline < OpenStudio::Measure::ModelMeasure
     cmd = "\"#{cli_path}\" run -w \"#{baseline_workflow_path.to_s}\""
     system(cmd)
 
+    # Get both sql files
+    baseline_sql_path = baseline_run_dir / OpenStudio::Path.new('run/eplusout.sql')
+    baseline_sql_file = OpenStudio::SqlFile.new(baseline_sql_path)
+    sql_file = runner.lastEnergyPlusSqlFile.get
+
+    # Compute savings
+    savings = baseline_sql_file.totalSiteEnergy.get - sql_file.totalSiteEnergy.get
+    puts savings
+
     return true
+  end
+
+  def energyPlusOutputRequests(runner, user_arguments)
+    super(runner, user_arguments)
+    return OpenStudio::IdfObjectVector.new
   end
 
 end
 
-RunBaseline.new.registerWithApplication
+ReportSavings.new.registerWithApplication
